@@ -26,5 +26,10 @@ namespace SuperPupSystems.Helper
         {
             timer.StartTimer(startTime, false);
         }
+
+        public void AddTime(float time)
+        {
+            timer.AddTime(time);
+        }
     }
 }

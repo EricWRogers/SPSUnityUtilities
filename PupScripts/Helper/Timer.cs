@@ -73,5 +73,13 @@ namespace SuperPupSystems.Helper
         {
             timeLeft = 0.0f;
         }
+
+        /// <summary>
+        /// Adds extra time to the timer
+        /// </summary>
+        public void AddTime(float time)
+        {
+            timeLeft += time;
+        }
     }
 }
