@@ -14,6 +14,7 @@ namespace SuperPupSystems.Helper
         public bool AutoRestart = false;
         [Tooltip("CountDownTime is the amount of time the timer will be set to but not the variable that will be counting down.")]
         public float CountDownTime = 1.0f;
+        public float TimeLeft { get { return timeLeft; } }
 
         // timeLeft is used as the countDown variable
         private float timeLeft = 0.0f;
