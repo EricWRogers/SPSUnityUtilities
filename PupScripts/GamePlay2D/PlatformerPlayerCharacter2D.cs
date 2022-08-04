@@ -7,6 +7,7 @@ namespace SuperPupSystems.GamePlay2D
     public class PlatformerPlayerCharacter2D : CharacterController2D
     {
         public float speed = 10.0f;
+        public float collisionTestOffset;
 
         public SpriteRenderer spriteRenderer;
 
@@ -23,19 +24,33 @@ namespace SuperPupSystems.GamePlay2D
         {
             float xInput = Input.GetAxis("Horizontal");
             isTouchingGround = IsTouchingGround();
+            Vector2 motion = rb2d.velocity;
 
-            if (isTouchingGround)
+            if (xInput != 0.0f)
             {
-                rb2d.velocity = new Vector2(
-                    xInput * speed,
-                    rb2d.velocity.y
-                );
+                
+                if (!TestMove(Vector2.right, collisionTestOffset) && xInput > 0.0f)
+                {
+                    Debug.Log("Hit Right");
+                    motion.x = -xInput * (speed*0.01f);
+                }
+                else if (!TestMove(Vector2.left, collisionTestOffset) && xInput < 0.0f)
+                {
+                    Debug.Log("Hit Left");
+                    motion.x = -xInput * (speed*0.01f);
+                }
+                else
+                {
+                    motion.x = xInput * speed;;
+                }
             }
 
             if (Input.GetAxis("Jump") > 0 && isTouchingGround)
             {
-                rb2d.velocity = new Vector2(rb2d.velocity.x, speed+2.5f);
+                motion.y = speed+2.5f;
             }
+
+            rb2d.velocity = motion;
         }
     }
 }

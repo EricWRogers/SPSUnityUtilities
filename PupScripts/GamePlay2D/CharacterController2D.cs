@@ -11,8 +11,16 @@ namespace SuperPupSystems.GamePlay2D
         public List<string> jumpableTags = new List<string>();
         public ContactFilter2D contactFilter2D;
         public GameObject debugTarget;
+        public GameObject debugDirection;
         
         public bool isTouchingGround = false;
+
+        public CapsuleCollider2D col;
+
+        void Awake()
+        {
+            col = GetComponent<CapsuleCollider2D>();
+        }
 
         void OnDrawGizmosSelected()
         {
@@ -24,6 +32,39 @@ namespace SuperPupSystems.GamePlay2D
             
             Gizmos.DrawCube(groundCheckPosition.transform.position, groundCheckSize);
         }
+
+        public bool TestMove(Vector2 direction, float offset)
+        {
+            Vector2 origin = ((Vector2)transform.position)+col.offset+(direction*offset);
+
+            debugDirection.transform.position = new Vector3(origin.x, origin.y, 0.0f);
+
+            col.enabled = false;
+
+            List<RaycastHit2D> results = new List<RaycastHit2D>();
+            
+            Physics2D.BoxCast(
+                origin,
+                new Vector2(col.size.x*0.9f, col.size.y*0.9f),
+                0.0f,
+                Vector2.right,
+                contactFilter2D,
+                results,
+                0.1f);
+            
+            foreach(RaycastHit2D hit in results)
+            {
+                if (jumpableTags.Contains(hit.collider.gameObject.tag))
+                {
+                    col.enabled = true;
+                    return false;
+                }
+            }
+            
+            col.enabled = true;
+            return true;
+        }
+
 
         public bool IsTouchingGround()
         {
