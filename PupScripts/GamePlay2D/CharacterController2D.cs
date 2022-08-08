@@ -12,10 +12,12 @@ namespace SuperPupSystems.GamePlay2D
         public ContactFilter2D contactFilter2D;
         public GameObject debugTarget;
         public GameObject debugDirection;
+        public GameObject rayDebug;
         
         public bool isTouchingGround = false;
 
         public CapsuleCollider2D col;
+        Ray ray;
 
         void Awake()
         {
@@ -31,6 +33,9 @@ namespace SuperPupSystems.GamePlay2D
                 Gizmos.color = new Color(1, 0, 0, 0.5f);
             
             Gizmos.DrawCube(groundCheckPosition.transform.position, groundCheckSize);
+
+            
+            Gizmos.DrawRay(ray);
         }
 
         public bool TestMove(Vector2 direction, float offset)
@@ -76,7 +81,6 @@ namespace SuperPupSystems.GamePlay2D
             return true;
         }
 
-
         public bool IsTouchingGround()
         {
             List<RaycastHit2D> results = new List<RaycastHit2D>();
@@ -110,6 +114,22 @@ namespace SuperPupSystems.GamePlay2D
                 contactFilter2D,
                 results,
                 0.1f);
+        }
+
+        public RaycastHit2D EdgeHit(Vector3 position, Vector2 direction, float offset)
+        {
+            Vector2 origin = col.offset;//(direction*offset);
+            origin.x += (col.size.x/2) + offset;
+            origin.x *= direction.x;
+            origin += ((Vector2)position);
+
+            if (rayDebug)
+                rayDebug.transform.position = origin;
+
+            RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down);
+            ray.direction = Vector2.down;
+            ray.origin = origin;
+            return hit;
         }
     }
 }

@@ -55,6 +55,32 @@ namespace SuperPupSystems.GamePlay2D
                     direction *= -1;
                 }
 
+                // Check that I will walk off the edge
+                RaycastHit2D rayHit = EdgeHit(transform.position, direction, 0.1f);
+                bool edgeFound = false;
+
+                if (rayHit)
+                {
+                    Vector2 characterBase = ((Vector2)transform.position)+col.offset;
+                    characterBase.y -= col.size.y/2;
+
+                    if (rayHit.point.y < characterBase.y-0.1f)
+                    {
+                        Debug.Log("rpy : " + rayHit.point.y + " cby : " + characterBase.y);
+                        edgeFound = true;
+                    }
+                }
+                else
+                {
+                    Debug.Log("Dropoff");
+                    edgeFound = true;
+                }
+
+                if (edgeFound)
+                {
+                    direction *= -1;
+                }
+
                 // Movement
                 rigidbody2D.velocity = direction * speed;
             }
