@@ -35,13 +35,24 @@ namespace SuperPupSystems.GamePlay2D
 
         public bool TestMove(Vector2 direction, float offset)
         {
+            return TestMove(direction, offset, jumpableTags);
+        }
+
+        public bool TestMove(Vector2 direction, float offset, List<string> tags)
+        {
+            List<RaycastHit2D> results = new List<RaycastHit2D>();
+
+            return TestMove(direction, offset, tags, results);
+        }
+
+        public bool TestMove(Vector2 direction, float offset, List<string> tags, List<RaycastHit2D> results)
+        {
             Vector2 origin = ((Vector2)transform.position)+col.offset+(direction*offset);
 
-            debugDirection.transform.position = new Vector3(origin.x, origin.y, 0.0f);
+            if(debugDirection)
+                debugDirection.transform.position = new Vector3(origin.x, origin.y, 0.0f);
 
             col.enabled = false;
-
-            List<RaycastHit2D> results = new List<RaycastHit2D>();
             
             Physics2D.BoxCast(
                 origin,
@@ -54,7 +65,7 @@ namespace SuperPupSystems.GamePlay2D
             
             foreach(RaycastHit2D hit in results)
             {
-                if (jumpableTags.Contains(hit.collider.gameObject.tag))
+                if (tags.Contains(hit.collider.gameObject.tag))
                 {
                     col.enabled = true;
                     return false;

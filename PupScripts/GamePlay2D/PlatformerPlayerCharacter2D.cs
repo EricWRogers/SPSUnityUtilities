@@ -11,37 +11,34 @@ namespace SuperPupSystems.GamePlay2D
 
         public SpriteRenderer spriteRenderer;
 
-        private Rigidbody2D rb2d;
-        private Vector2 motion = new Vector2();
+        private Rigidbody2D rigidbody2D;
         private float jumpInputLastFrame = 0.0f;
         
         void Start()
         {
-            rb2d = GetComponent<Rigidbody2D>();
+            rigidbody2D = GetComponent<Rigidbody2D>();
         }
 
         void Update()
         {
             float xInput = Input.GetAxis("Horizontal");
             isTouchingGround = IsTouchingGround();
-            Vector2 motion = rb2d.velocity;
+            Vector2 motion = rigidbody2D.velocity;
 
             if (xInput != 0.0f)
             {
                 
                 if (!TestMove(Vector2.right, collisionTestOffset) && xInput > 0.0f)
                 {
-                    Debug.Log("Hit Right");
                     motion.x = -xInput * (speed*0.01f);
                 }
                 else if (!TestMove(Vector2.left, collisionTestOffset) && xInput < 0.0f)
                 {
-                    Debug.Log("Hit Left");
                     motion.x = -xInput * (speed*0.01f);
                 }
                 else
                 {
-                    motion.x = xInput * speed;;
+                    motion.x = xInput * speed;
                 }
             }
 
@@ -50,7 +47,7 @@ namespace SuperPupSystems.GamePlay2D
                 motion.y = speed+2.5f;
             }
 
-            rb2d.velocity = motion;
+            rigidbody2D.velocity = motion;
         }
     }
 }
