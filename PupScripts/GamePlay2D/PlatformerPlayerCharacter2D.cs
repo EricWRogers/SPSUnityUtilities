@@ -10,6 +10,7 @@ namespace SuperPupSystems.GamePlay2D
         public float collisionTestOffset;
 
         public SpriteRenderer spriteRenderer;
+        public Animator animator;
 
         private Rigidbody2D rigidbody2D;
         private float jumpInputLastFrame = 0.0f;
@@ -45,6 +46,13 @@ namespace SuperPupSystems.GamePlay2D
             if (Input.GetAxis("Jump") > 0 && isTouchingGround)
             {
                 motion.y = speed+2.5f;
+            }
+
+            if (animator != null)
+            {
+                animator.SetFloat("SpeedX", Mathf.Abs(motion.x));
+                animator.SetFloat("SpeedY", motion.y);
+                animator.SetBool("Grounded", isTouchingGround);
             }
 
             rigidbody2D.velocity = motion;
