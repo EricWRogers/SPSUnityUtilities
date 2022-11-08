@@ -7,6 +7,7 @@ namespace SuperPupSystems.Helper
 {
     public class CountDownText : MonoBehaviour
     {
+        public string textHeader = "Timeleft : ";
         public Timer timer;
         public float time { get { return timer.TimeLeft; } }
         public float startTime = 30.0f;
@@ -19,7 +20,7 @@ namespace SuperPupSystems.Helper
         // Update is called once per frame
         void Update()
         {
-            text.text = "Timeleft : " + (int)time;
+            text.text = textHeader + Mathf.Ceil(time);
         }
 
         public void StartCountDownTimer()
