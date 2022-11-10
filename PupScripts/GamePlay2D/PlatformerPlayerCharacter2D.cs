@@ -55,6 +55,14 @@ namespace SuperPupSystems.GamePlay2D
                 animator.SetBool("Grounded", isTouchingGround);
             }
 
+            if (spriteRenderer != null && xInput != 0.0f)
+            {
+                if (xInput > 0.0f)
+                    spriteRenderer.flipX = false;
+                else
+                    spriteRenderer.flipX = true;
+            }
+
             rigidbody2D.velocity = motion;
         }
     }
