@@ -14,6 +14,9 @@ namespace SuperPupSystems.Helper
         public bool AutoRestart = false;
         [Tooltip("CountDownTime is the amount of time the timer will be set to but not the variable that will be counting down.")]
         public float CountDownTime = 1.0f;
+        [Tooltip("Time scale and be used to speed up or slow down to timer")]
+        public float timeScale = 1.0f;
+
         public float TimeLeft { get { return timeLeft; } }
 
         // timeLeft is used as the countDown variable
@@ -39,7 +42,7 @@ namespace SuperPupSystems.Helper
         {
             if (timeLeft > 0.0f)
             {
-                timeLeft -= Time.deltaTime;
+                timeLeft -= (Time.deltaTime * timeScale);
 
                 if (timeLeft <= 0.0f)
                 {
