@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -9,22 +8,20 @@ namespace SuperPupSystems.GamePlay2D
     {
         public float speed = 10.0f;
         public float collisionTestOffset;
-        public SpriteRenderer spriteRenderer;
-        public Rigidbody2D rigidbody2D;
+        public new Rigidbody2D rb2d;
         public Vector2 direction = Vector2.right;
-        public bool startRight = true;
         public int damage = 2;
         public List<string> tagsToDamage;
         
         void Start()
         {
-            rigidbody2D = GetComponent<Rigidbody2D>();
+            rb2d = GetComponent<Rigidbody2D>();
         }
 
         
         void Update()
         {
-            Vector2 motion = rigidbody2D.velocity;
+            Vector2 motion = rb2d.velocity;
             isTouchingGround = IsTouchingGround();
 
             if (isTouchingGround)
@@ -82,7 +79,7 @@ namespace SuperPupSystems.GamePlay2D
                 }
 
                 // Movement
-                rigidbody2D.velocity = direction * speed;
+                rb2d.velocity = direction * speed;
             }
         }
     }

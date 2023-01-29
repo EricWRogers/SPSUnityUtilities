@@ -10,7 +10,6 @@ namespace SuperPupSystems.GamePlay2D
         public Vector3 groundCheckSize = new Vector3(0.75f, 0.2f, 1.0f);
         public List<string> jumpableTags = new List<string>();
         public ContactFilter2D contactFilter2D;
-        public GameObject debugTarget;
         public GameObject debugDirection;
         public GameObject rayDebug;
         

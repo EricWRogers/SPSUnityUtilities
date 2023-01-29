@@ -13,7 +13,7 @@ namespace SuperPupSystems.GamePlay2D
         public Animator animator;
 
         private Rigidbody2D rigidbody2D;
-        private float jumpInputLastFrame = 0.0f;
+        //private float jumpInputLastFrame = 0.0f;
         
         void Start()
         {
