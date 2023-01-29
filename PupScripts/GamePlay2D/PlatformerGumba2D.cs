@@ -8,7 +8,7 @@ namespace SuperPupSystems.GamePlay2D
     {
         public float speed = 10.0f;
         public float collisionTestOffset;
-        public new Rigidbody2D rb2d;
+        public Rigidbody2D rb2d;
         public Vector2 direction = Vector2.right;
         public int damage = 2;
         public List<string> tagsToDamage;

@@ -12,19 +12,19 @@ namespace SuperPupSystems.GamePlay2D
         public SpriteRenderer spriteRenderer;
         public Animator animator;
 
-        private Rigidbody2D rigidbody2D;
+        private Rigidbody2D rb2d;
         //private float jumpInputLastFrame = 0.0f;
         
         void Start()
         {
-            rigidbody2D = GetComponent<Rigidbody2D>();
+            rb2d = GetComponent<Rigidbody2D>();
         }
 
         void Update()
         {
             float xInput = Input.GetAxis("Horizontal");
             isTouchingGround = IsTouchingGround();
-            Vector2 motion = rigidbody2D.velocity;
+            Vector2 motion = rb2d.velocity;
 
             if (xInput != 0.0f)
             {
@@ -63,7 +63,7 @@ namespace SuperPupSystems.GamePlay2D
                     spriteRenderer.flipX = true;
             }
 
-            rigidbody2D.velocity = motion;
+            rb2d.velocity = motion;
         }
     }
 }
