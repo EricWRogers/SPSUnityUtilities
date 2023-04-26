@@ -9,6 +9,7 @@ public class LocationManager : MonoBehaviour
     public UnityEvent locationNotEnabledEvent;
     public UnityEvent<Vector2> gpsUpdate; 
     public TMP_Text LogText = null;
+    public Transform playerTransform;
 
     private bool locationEnabled = false;
 
@@ -20,7 +21,7 @@ public class LocationManager : MonoBehaviour
         }
         else
         {
-            LogText.text = _message;
+            LogText.text = _message + " " +playerTransform.localPosition.x + " " +playerTransform.localPosition.y;
         }
     }
 
@@ -86,17 +87,14 @@ public class LocationManager : MonoBehaviour
         
         if (_location > 0)
         {
-            message.Remove(0,4);
-            message.Insert(2,".");
+            message = message.Remove(0,4);
+            message = message.Insert(2,".");
         }
         else
         {
-            message.Remove(1,4);
-            message.Insert(3,".");
-        }
-
-        LogText.text += " " + message;
-        
+            message = message.Remove(1,4);
+            message = message.Insert(3,".");
+        }        
 
         return float.Parse(message);
     }
@@ -105,11 +103,11 @@ public class LocationManager : MonoBehaviour
     {
         if (locationEnabled)
         {
-            Log("Location: " + Input.location.lastData.latitude + " " + Input.location.lastData.longitude + " " + Input.location.lastData.altitude + " " + Input.location.lastData.horizontalAccuracy + " " + Input.location.lastData.timestamp);
             gpsUpdate.Invoke(new Vector2(
                 GPSChop(Input.location.lastData.longitude),
                 GPSChop(Input.location.lastData.latitude)
                 ));
+            Log("Location: " + Input.location.lastData.latitude + " " + Input.location.lastData.longitude + " " + Input.location.lastData.altitude + " " + Input.location.lastData.horizontalAccuracy + " " + Input.location.lastData.timestamp);
         }
     }
 
