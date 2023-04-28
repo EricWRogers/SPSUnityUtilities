@@ -53,6 +53,11 @@ namespace SuperPupSystems.Helper
             }
         }
 
+        public void StartTimerFromEvent()
+        {
+            StartTimer();
+        }
+
         /// <summary>
         /// Start timer will start the timer with the values passed in or
         /// the public class variables are null.
