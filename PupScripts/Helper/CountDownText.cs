@@ -14,6 +14,10 @@ namespace SuperPupSystems.Helper
         public TMP_Text text;
         void Start()
         {
+            if (timer == null)
+            {
+                Debug.LogError("GameObject " + gameObject.name + " field timer is equal to null");
+            }
             StartCountDownTimer();
         }
 
