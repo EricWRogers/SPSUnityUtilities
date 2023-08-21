@@ -12,15 +12,15 @@ namespace SuperPupSystems.Helper
     public class HealedEvent : UnityEvent<int> {}
     public class Health : MonoBehaviour
     {
-        public HealthChangedEvent HealthChanged;
-        public HealedEvent Healed;
-        public UnityEvent Hurt;
-        public UnityEvent OutOfHealth;
+        public HealthChangedEvent healthChanged;
+        public HealedEvent healed;
+        public UnityEvent hurt;
+        public UnityEvent outOfHealth;
 
         [Tooltip("")]
-        public int MaxHealth = 100;
+        public int maxHealth = 100;
         [Tooltip("")]
-        public int CurrentHealth = 0;
+        public int currentHealth = 0;
 
         /// <summary>
         /// Start is called in the frame when a script is enable just before any
@@ -28,22 +28,22 @@ namespace SuperPupSystems.Helper
         /// </summary>
         void Start()
         {
-            if (CurrentHealth != 0)
-                CurrentHealth = MaxHealth;
+            if (currentHealth != 0)
+                currentHealth = maxHealth;
 
-            if (HealthChanged == null)
-                HealthChanged = new HealthChangedEvent();
+            if (healthChanged == null)
+                healthChanged = new HealthChangedEvent();
             
-            if (Healed == null)
-                Healed = new HealedEvent();
+            if (healed == null)
+                healed = new HealedEvent();
 
-            if (Hurt == null)
-                Hurt = new UnityEvent();
+            if (hurt == null)
+                hurt = new UnityEvent();
             
-            if (OutOfHealth == null)
-                OutOfHealth = new UnityEvent();
+            if (outOfHealth == null)
+                outOfHealth = new UnityEvent();
             
-            HealthChanged.Invoke(new HealthChangedObject{ maxHealth = MaxHealth, currentHealth = CurrentHealth, delta = CurrentHealth});
+            healthChanged.Invoke(new HealthChangedObject{ maxHealth = maxHealth, currentHealth = currentHealth, delta = currentHealth});
         }
 
         /// <summary>
@@ -52,22 +52,22 @@ namespace SuperPupSystems.Helper
         /// <param name="_amount">How much of the current health will you lose.</param>
         public void Damage(int _damage)
         {
-            if (CurrentHealth <= 0)
+            if (currentHealth <= 0)
                 return;
 
-            CurrentHealth -= _damage;
+            currentHealth -= _damage;
 
-            if (CurrentHealth <= 0)
+            if (currentHealth <= 0)
             {
-                CurrentHealth = 0;
-                OutOfHealth.Invoke();
+                currentHealth = 0;
+                outOfHealth.Invoke();
             }
             else
             {
-                Hurt.Invoke();
+                hurt.Invoke();
             }
             
-            HealthChanged.Invoke(new HealthChangedObject{ maxHealth = MaxHealth, currentHealth = CurrentHealth, delta = -_damage});
+            healthChanged.Invoke(new HealthChangedObject{ maxHealth = maxHealth, currentHealth = currentHealth, delta = -_damage});
         }
 
         /// <summary>
@@ -76,21 +76,21 @@ namespace SuperPupSystems.Helper
         /// <param name="_amount">The amount to heal the health class or if null current health will equal to max health.</param>
         public void Heal(int? _amount = null)
         {
-            if (CurrentHealth <= 0)
+            if (currentHealth <= 0)
                 return;
 
             if (_amount == null)
             {
-                _amount = MaxHealth - CurrentHealth;
+                _amount = maxHealth - currentHealth;
             }
 
-            CurrentHealth += (int)_amount;
+            currentHealth += (int)_amount;
 
-            if (CurrentHealth > MaxHealth)
-                CurrentHealth = MaxHealth;
+            if (currentHealth > maxHealth)
+                currentHealth = maxHealth;
 
-            Healed.Invoke((int)_amount);
-            HealthChanged.Invoke(new HealthChangedObject{ maxHealth = MaxHealth, currentHealth = CurrentHealth, delta = (int)_amount});
+            healed.Invoke((int)_amount);
+            healthChanged.Invoke(new HealthChangedObject{ maxHealth = maxHealth, currentHealth = currentHealth, delta = (int)_amount});
         }
 
         /// <summary>
@@ -99,21 +99,21 @@ namespace SuperPupSystems.Helper
         /// <param name="_amount">The new current health after getting revived or if null current health will equal to max health.</param>
         public void Revive(int? _amount = null)
         {
-            if (CurrentHealth > 0)
+            if (currentHealth > 0)
                 return;
             
-            CurrentHealth = 0;
+            currentHealth = 0;
             
             if (_amount == null)
-                _amount = MaxHealth;
+                _amount = maxHealth;
 
-            CurrentHealth = (int)_amount;
+            currentHealth = (int)_amount;
 
-            if (CurrentHealth > MaxHealth)
-                CurrentHealth = MaxHealth;
+            if (currentHealth > maxHealth)
+                currentHealth = maxHealth;
             
-            Healed.Invoke((int)_amount);
-            HealthChanged.Invoke(new HealthChangedObject{ maxHealth = MaxHealth, currentHealth = CurrentHealth, delta = (int)_amount});
+            healed.Invoke((int)_amount);
+            healthChanged.Invoke(new HealthChangedObject{ maxHealth = maxHealth, currentHealth = currentHealth, delta = (int)_amount});
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace SuperPupSystems.Helper
         /// </summary>
         public void Kill()
         {
-            Damage(CurrentHealth);
+            Damage(currentHealth);
         }
     }
 
