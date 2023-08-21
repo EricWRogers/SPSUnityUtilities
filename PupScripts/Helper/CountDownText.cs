@@ -9,7 +9,7 @@ namespace SuperPupSystems.Helper
     {
         public string textHeader = "Timeleft : ";
         public Timer timer;
-        public float time { get { return timer.TimeLeft; } }
+        public float time { get { return timer.timeLeft; } }
         public float startTime = 30.0f;
         public TMP_Text text;
         void Start()

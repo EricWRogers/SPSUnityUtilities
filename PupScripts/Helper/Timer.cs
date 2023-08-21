@@ -7,20 +7,20 @@ namespace SuperPupSystems.Helper
 {
     public class Timer : MonoBehaviour
     {
-        public UnityEvent TimeOut;
-        [Tooltip("When AutoStart is set to true the timer starts when the GameObject Start method is called by Unity.")]
-        public bool AutoStart = false;
-        [Tooltip("When AutoRestart is set to true the timer with start again as soon as it runs out.")]
-        public bool AutoRestart = false;
-        [Tooltip("CountDownTime is the amount of time the timer will be set to but not the variable that will be counting down.")]
-        public float CountDownTime = 1.0f;
+        // m_timeLeft is used as the countDown variable
+        private float m_timeLeft = 0.0f;
+
+        public UnityEvent timeout;
+        [Tooltip("When autoStart is set to true the timer starts when the GameObject Start method is called by Unity.")]
+        public bool autoStart = false;
+        [Tooltip("When autoRestart is set to true the timer with start again as soon as it runs out.")]
+        public bool autoRestart = false;
+        [Tooltip("countDownTime is the amount of time the timer will be set to but not the variable that will be counting down.")]
+        public float countDownTime = 1.0f;
         [Tooltip("Time scale and be used to speed up or slow down to timer")]
         public float timeScale = 1.0f;
 
-        public float TimeLeft { get { return timeLeft; } }
-
-        // timeLeft is used as the countDown variable
-        private float timeLeft = 0.0f;
+        public float timeLeft { get { return m_timeLeft; } }
 
         /// <summary>
         /// Start is called in the frame when a script is enable just before any
@@ -28,11 +28,11 @@ namespace SuperPupSystems.Helper
         /// </summary>
         void Start()
         {
-            if (TimeOut == null)
-                TimeOut = new UnityEvent();
+            if (timeout == null)
+                timeout = new UnityEvent();
 
-            if (AutoStart)
-                StartTimer(CountDownTime, AutoRestart);
+            if (autoStart)
+                StartTimer(countDownTime, autoRestart);
         }
 
         /// <summary>
@@ -40,15 +40,15 @@ namespace SuperPupSystems.Helper
         /// </summary>
         void Update()
         {
-            if (timeLeft > 0.0f)
+            if (m_timeLeft > 0.0f)
             {
-                timeLeft -= (Time.deltaTime * timeScale);
+                m_timeLeft -= (Time.deltaTime * timeScale);
 
-                if (timeLeft <= 0.0f)
+                if (m_timeLeft <= 0.0f)
                 {
-                    TimeOut.Invoke();
-                    if (AutoRestart)
-                        StartTimer(CountDownTime, AutoRestart);
+                    timeout.Invoke();
+                    if (autoRestart)
+                        StartTimer(countDownTime, autoRestart);
                 }
             }
         }
@@ -62,32 +62,32 @@ namespace SuperPupSystems.Helper
         /// Start timer will start the timer with the values passed in or
         /// the public class variables are null.
         /// </summary>
-        /// <param name="countDown">The amount of time in seconds the timer will run.</param>
-        /// <param name="autoRestart">If true the timer will restart when finish.</param>
-        public void StartTimer(float? countDown = null, bool autoRestart = false)
+        /// <param name="_countDown">The amount of time in seconds the timer will run.</param>
+        /// <param name="_autoRestart">If true the timer will restart when finish.</param>
+        public void StartTimer(float? _countDown = null, bool _autoRestart = false)
         {
-            if (countDown != null && countDown > 0.0f)
-                CountDownTime = (float)countDown;
+            if (_countDown != null && _countDown > 0.0f)
+                countDownTime = (float)_countDown;
 
-            AutoRestart = autoRestart;
+            autoRestart = _autoRestart;
 
-            timeLeft = CountDownTime;
+            m_timeLeft = countDownTime;
         }
 
         /// <summary>
-        /// Stop timer will end the timer without invoking the TimeOut Event
+        /// Stop timer will end the timer without invoking the timeout Event
         /// </summary>
         public void StopTimer()
         {
-            timeLeft = 0.0f;
+            m_timeLeft = 0.0f;
         }
 
         /// <summary>
         /// Adds extra time to the timer
         /// </summary>
-        public void AddTime(float time)
+        public void AddTime(float _time)
         {
-            timeLeft += time;
+            m_timeLeft += _time;
         }
     }
 }
