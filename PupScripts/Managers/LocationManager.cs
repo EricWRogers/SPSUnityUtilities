@@ -8,20 +8,20 @@ public class LocationManager : MonoBehaviour
 {
     public UnityEvent locationNotEnabledEvent;
     public UnityEvent<Vector2> gpsUpdate; 
-    public TMP_Text LogText = null;
+    public TMP_Text logText = null;
     public Transform playerTransform;
 
-    private bool locationEnabled = false;
+    private bool m_locationEnabled = false;
 
     void Log(string _message)
     {
-        if (LogText == null)
+        if (logText == null)
         {
             print(_message);
         }
         else
         {
-            LogText.text = _message + " " +playerTransform.localPosition.x + " " +playerTransform.localPosition.y;
+            logText.text = _message + " " +playerTransform.localPosition.x + " " +playerTransform.localPosition.y;
         }
     }
 
@@ -45,7 +45,7 @@ public class LocationManager : MonoBehaviour
 
         // Starts the location service.
         Input.location.Start();
-        locationEnabled = true;
+        m_locationEnabled = true;
 
         // Waits until the location service initializes
         int maxWait = 20;
@@ -101,7 +101,7 @@ public class LocationManager : MonoBehaviour
 
     public void UpdateLocation()
     {
-        if (locationEnabled)
+        if (m_locationEnabled)
         {
             gpsUpdate.Invoke(new Vector2(
                 GPSChop(Input.location.lastData.longitude),

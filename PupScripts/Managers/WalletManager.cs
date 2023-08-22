@@ -7,7 +7,7 @@ namespace SuperPupSystems.Manager
 {
     public class WalletManager : MonoBehaviour
     {
-        public static WalletManager Instance;
+        public static WalletManager instance;
         // Events
         public UnityEvent<int, int> coinUpdatedEvent; // delta, current coins
         public UnityEvent<int> earnEvent;
@@ -15,16 +15,16 @@ namespace SuperPupSystems.Manager
         public UnityEvent outOfCashEvent;
 
         // Variables
-        private int coin = 0;
+        private int _coin = 0;
 
-        public int Coin { get { return coin; } }
+        public int Coin { get { return _coin; } }
 
 
         void Awake()
         {
-            if (Instance == null)
+            if (instance == null)
             {
-                Instance = this;
+                instance = this;
             }
 
             if (coinUpdatedEvent == null)
@@ -42,7 +42,7 @@ namespace SuperPupSystems.Manager
 
         public bool ICanAfford(int _amount)
         {
-            if (0 > (coin - _amount))
+            if (0 > (_coin - _amount))
             {
                 return false;
             }
@@ -57,26 +57,26 @@ namespace SuperPupSystems.Manager
             if (!iCanAfford)
                 return false;
 
-            coin -= _amount;
-            if (coin <= 0)
+            _coin -= _amount;
+            if (_coin <= 0)
                 outOfCashEvent.Invoke();
 
             purchaseEvent.Invoke();
 
-            coinUpdatedEvent.Invoke(-_amount, coin);
+            coinUpdatedEvent.Invoke(-_amount, _coin);
 
             return true;
         }
 
         public void Earn(int _amount, Vector3? _location = null)
         {
-            if (coin < 0)
+            if (_coin < 0)
                 return;
 
-            coin += _amount;
+            _coin += _amount;
 
             earnEvent.Invoke(_amount);
-            coinUpdatedEvent.Invoke(_amount, coin);
+            coinUpdatedEvent.Invoke(_amount, _coin);
         }
     }
 }

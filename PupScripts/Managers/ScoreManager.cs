@@ -6,53 +6,53 @@ namespace SuperPupSystems.Manager
 {
     public class ScoreManager : MonoBehaviour
     {
-        public static ScoreManager Instance;
-        public UpdateScoreEvent UpdateScore;
-        public int Score { get; private set; }
-        public int Multiplier { get; private set; }
+        public static ScoreManager instance;
+        public UpdateScoreEvent updateScore;
+        public int score { get; private set; }
+        public int multiplier { get; private set; }
 
         void Awake()
         {
-            if (Instance == null)
+            if (instance == null)
             {
-                Instance = this;
+                instance = this;
             }
 
-            Multiplier = 1;
-            Score = 0;
+            multiplier = 1;
+            score = 0;
 
-            if(UpdateScore == null)
-                UpdateScore = new UpdateScoreEvent();
+            if(updateScore == null)
+                updateScore = new UpdateScoreEvent();
         }
 
         public void AddPoints(int _amount, Vector3? _location = null)
         {
-            Score += (_amount * Multiplier);
+            score += (_amount * multiplier);
 
 
-            UpdateScore.Invoke( new ScoreInfo(Score, _amount, _location));
+            updateScore.Invoke( new ScoreInfo(score, _amount, _location));
         }
 
         public void ResetScore()
         {
-            Multiplier = 1;
-            Score = 0;
+            multiplier = 1;
+            score = 0;
 
-            UpdateScore.Invoke( new ScoreInfo(0, 0, Vector3.zero));
+            updateScore.Invoke( new ScoreInfo(0, 0, Vector3.zero));
         }
     }
 
     public class ScoreInfo
     {
-        public int Score;
-        public int Delta;
-        public Vector3? Location;
+        public int score;
+        public int delta;
+        public Vector3? location;
 
-        public ScoreInfo(int s, int d, Vector3? l)
+        public ScoreInfo(int _score, int _delta, Vector3? _location)
         {
-            Score = s;
-            Delta = d;
-            Location = l;
+            score = _score;
+            delta = _delta;
+            location = _location;
         }
     }
 
