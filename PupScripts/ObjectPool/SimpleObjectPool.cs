@@ -7,17 +7,17 @@ namespace SuperPupSystems.Helper
 public class SimpleObjectPool : MonoBehaviour
 {
     // instance reference
-    public static SimpleObjectPool Instance { get; private set; }
+    public static SimpleObjectPool instance { get; private set; }
     // pool config
     public List<Pool> pools;
     // pool
-    private Dictionary<string, Queue<GameObject>> poolDictionary;
+    private Dictionary<string, Queue<GameObject>> m_poolDictionary;
     public void Awake()
     {
         // Make an instance
-        if (Instance == null)
+        if (instance == null)
         {
-            Instance = this;
+            instance = this;
         }
         else
         {
@@ -25,8 +25,8 @@ public class SimpleObjectPool : MonoBehaviour
             return;
         }
 
-        // set the pool to an emply Dictionary
-        poolDictionary = new Dictionary<string, Queue<GameObject>>();
+        // set the pool to an empty Dictionary
+        m_poolDictionary = new Dictionary<string, Queue<GameObject>>();
 
         foreach (Pool pool in pools)
         {
@@ -47,31 +47,31 @@ public class SimpleObjectPool : MonoBehaviour
                 objectPool.Enqueue(obj);
             }
 
-            poolDictionary.Add(pool.code, objectPool);
+            m_poolDictionary.Add(pool.code, objectPool);
         }
 
     }
 
     
-    public GameObject SpawnFromPool (string code, Vector3 position, Quaternion rotation)
+    public GameObject SpawnFromPool (string _code, Vector3 _position, Quaternion _rotation)
     {
         // check for error
-        if (!poolDictionary.ContainsKey(code))
+        if (!m_poolDictionary.ContainsKey(_code))
         {
-            Debug.LogWarning("Pool with code " + code + " doesn't excist.");
+            Debug.LogWarning("Pool with code " + _code + " doesn't excist.");
             return null;
         }
 
         // remove object from beginning of queue
-        GameObject objectToSpawn = poolDictionary[code].Dequeue();
+        GameObject objectToSpawn = m_poolDictionary[_code].Dequeue();
 
         // set position and rotation
         objectToSpawn.SetActive(true);
-        objectToSpawn.transform.position = position;
-        objectToSpawn.transform.rotation = rotation;
+        objectToSpawn.transform.position = _position;
+        objectToSpawn.transform.rotation = _rotation;
 
         // add object to the end of the queue
-        poolDictionary[code].Enqueue(objectToSpawn);
+        m_poolDictionary[_code].Enqueue(objectToSpawn);
 
         return objectToSpawn;
     }
