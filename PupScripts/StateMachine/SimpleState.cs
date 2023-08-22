@@ -5,37 +5,37 @@ namespace SuperPupSystems.StateMachine
     [System.Serializable]
     public class SimpleState
     {
-        private bool HasBeenInitialized = false;
+        private bool m_hasBeenInitialized = false;
         
         [Header("State Events")]
         [SerializeField]
-        public OnStateStart StateStart;
+        public OnStateStart stateStart;
         [SerializeField]
-        public OnStateUpdate StateUpdated;
+        public OnStateUpdate stateUpdated;
         [SerializeField]
-        public OnStateExit StateExited;
+        public OnStateExit stateExited;
 
         [HideInInspector]
-        public SimpleStateMachine StateMachine;
+        public SimpleStateMachine stateMachine;
 
         /// <summary>
         /// Called first when changing to this state
         /// </summary>
         public virtual void OnStart()
         {
-            StateStart.Invoke();
-            HasBeenInitialized = true;
+            stateStart.Invoke();
+            m_hasBeenInitialized = true;
         }
 
         /// <summary>
         /// Called on FixedUpdate while this state is active
         /// </summary>
-        /// <param name="dt">amount of time in seconds since the last frame</param>
-        public virtual void UpdateState(float dt)
+        /// <param name="_dt">amount of time in seconds since the last frame</param>
+        public virtual void UpdateState(float _dt)
         {
-            if (!HasBeenInitialized)
+            if (!m_hasBeenInitialized)
                 return;
-            StateUpdated.Invoke();
+            stateUpdated.Invoke();
         }
 
         /// <summary>
@@ -43,10 +43,10 @@ namespace SuperPupSystems.StateMachine
         /// </summary>
         public virtual void OnExit()
         {
-            if (!HasBeenInitialized)
+            if (!m_hasBeenInitialized)
                 return;
-            StateExited.Invoke();
-            HasBeenInitialized = false;
+            stateExited.Invoke();
+            m_hasBeenInitialized = false;
         }
     }
 
