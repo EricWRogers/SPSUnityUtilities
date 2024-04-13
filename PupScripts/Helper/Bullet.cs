@@ -31,7 +31,7 @@ namespace SuperPupSystems.Helper
         private void Start()
         {
             m_timer = GetComponent<Timer>();
-            m_timer.TimeOut.AddListener(DestroyBullet);
+            m_timer.timeout.AddListener(DestroyBullet);
 
             m_timer.StartTimer(lifeTime);
         }
