@@ -34,6 +34,9 @@ namespace SuperPupSystems.Helper
             m_timer.timeout.AddListener(DestroyBullet);
 
             m_timer.StartTimer(lifeTime);
+
+            // set init position
+            m_lastPosition = transform.position;
         }
 
         private void FixedUpdate()
