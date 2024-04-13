@@ -123,6 +123,11 @@ namespace SuperPupSystems.Helper
         {
             Damage(currentHealth);
         }
+
+        public void DestroyGameObject()
+        {
+            Destroy(gameObject);
+        }
     }
 
     public struct HealthChangedObject {

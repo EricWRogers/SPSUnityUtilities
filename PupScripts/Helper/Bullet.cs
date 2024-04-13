@@ -39,7 +39,7 @@ namespace SuperPupSystems.Helper
         private void FixedUpdate()
         {
             Move();
-            
+
             CollisionCheck();
 
             m_lastPosition = transform.position;
@@ -57,13 +57,13 @@ namespace SuperPupSystems.Helper
                 if (tags.Contains(m_info.transform.tag))
                 {
                     m_info.transform.GetComponent<Health>()?.Damage(damage);
-                        
-                    hitTarget.Invoke();
 
-                    if (destroyOnImpact)
-                    {
-                        DestroyBullet();
-                    }
+                    hitTarget.Invoke();
+                }
+
+                if (destroyOnImpact)
+                {
+                    DestroyBullet();
                 }
             }
         }
