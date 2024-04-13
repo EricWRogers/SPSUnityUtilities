@@ -47,7 +47,7 @@ namespace SuperPupSystems.Helper
 
         private void Move()
         {
-            transform.position = transform.forward * speed * Time.fixedDeltaTime;
+            transform.position += transform.forward * speed * Time.fixedDeltaTime;
         }
 
         private void CollisionCheck()
@@ -56,6 +56,8 @@ namespace SuperPupSystems.Helper
             {
                 if (tags.Contains(m_info.transform.tag))
                 {
+                    m_info.transform.GetComponent<Health>()?.Damage(damage);
+                        
                     hitTarget.Invoke();
 
                     if (destroyOnImpact)
