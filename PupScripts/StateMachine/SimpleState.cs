@@ -11,8 +11,6 @@ namespace SuperPupSystems.StateMachine
         [SerializeField]
         public OnStateStart stateStart;
         [SerializeField]
-        public OnStateUpdate stateUpdated;
-        [SerializeField]
         public OnStateExit stateExited;
 
         [HideInInspector]
@@ -23,7 +21,6 @@ namespace SuperPupSystems.StateMachine
         /// </summary>
         public virtual void OnStart()
         {
-            stateStart.Invoke();
             m_hasBeenInitialized = true;
         }
 
@@ -35,7 +32,6 @@ namespace SuperPupSystems.StateMachine
         {
             if (!m_hasBeenInitialized)
                 return;
-            stateUpdated.Invoke();
         }
 
         /// <summary>
@@ -45,15 +41,12 @@ namespace SuperPupSystems.StateMachine
         {
             if (!m_hasBeenInitialized)
                 return;
-            stateExited.Invoke();
             m_hasBeenInitialized = false;
         }
     }
 
     [System.Serializable]
     public class OnStateStart : UnityEngine.Events.UnityEvent { }
-    [System.Serializable]
-    public class OnStateUpdate : UnityEngine.Events.UnityEvent { }
     [System.Serializable]
     public class OnStateExit : UnityEngine.Events.UnityEvent { }
 }

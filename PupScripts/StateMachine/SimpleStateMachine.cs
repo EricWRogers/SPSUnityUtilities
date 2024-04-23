@@ -10,7 +10,7 @@ namespace SuperPupSystems.StateMachine
         protected SimpleState m_state = null;
         [HideInInspector]
         public List<SimpleState> states;
-        public string stateName { get { return nameof(m_state); } }
+        public string stateName;
 
         /// <summary>
         /// Sets new current state
@@ -22,12 +22,15 @@ namespace SuperPupSystems.StateMachine
                 return;
             if (m_state != null)
             {
+                m_state.stateExited.Invoke();
                 m_state.OnExit();
             }
 
             m_state = _s;
             m_state.stateMachine = this;
+            m_state.stateStart.Invoke();
             m_state.OnStart();
+            stateName = m_state.GetType().ToString();
         }
 
         /// <summary>
