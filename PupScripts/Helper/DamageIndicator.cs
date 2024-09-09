@@ -8,17 +8,18 @@ namespace SuperPupSystems.Helper
     {
         public Material defaultMaterial;
         public Material hurtMaterial;
+        public Renderer targetRenderer;
         public Timer timer;
         
         public void ResetDefaultMaterial()
         {
-            gameObject.GetComponent<Renderer>().material = defaultMaterial;
+            targetRenderer.material = defaultMaterial;
         }
 
         public void Hurt()
         {
             timer.StartTimer();
-            gameObject.GetComponent<Renderer>().material = hurtMaterial;
+            targetRenderer.material = hurtMaterial;
         }
     }
 }
