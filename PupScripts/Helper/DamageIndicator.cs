@@ -17,7 +17,7 @@ namespace SuperPupSystems.Helper
 
         public void Hurt()
         {
-            timer.Start();
+            timer.StartTimer();
             gameObject.GetComponent<Renderer>().material = hurtMaterial;
         }
     }
