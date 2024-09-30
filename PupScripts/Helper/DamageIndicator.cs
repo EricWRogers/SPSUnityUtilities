@@ -13,11 +13,15 @@ namespace SuperPupSystems.Helper
         
         public void ResetDefaultMaterial()
         {
+            if (enabled == false) return;
+
             targetRenderer.material = defaultMaterial;
         }
 
         public void Hurt()
         {
+            if (enabled == false) return;
+            
             timer.StartTimer();
             targetRenderer.material = hurtMaterial;
         }
