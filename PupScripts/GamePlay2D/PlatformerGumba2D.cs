@@ -21,7 +21,7 @@ namespace SuperPupSystems.GamePlay2D
         
         void Update()
         {
-            Vector2 motion = rb2d.velocity;
+            Vector2 motion = rb2d.linearVelocity;
             isTouchingGround = IsTouchingGround();
 
             if (isTouchingGround)
@@ -79,7 +79,7 @@ namespace SuperPupSystems.GamePlay2D
                 }
 
                 // Movement
-                rb2d.velocity = direction * speed;
+                rb2d.linearVelocity = direction * speed;
             }
         }
     }

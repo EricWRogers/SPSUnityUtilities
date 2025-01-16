@@ -23,7 +23,7 @@ namespace SuperPupSystems.GamePlay2D
         {
             float xInput = Input.GetAxis("Horizontal");
             isTouchingGround = IsTouchingGround();
-            Vector2 motion = _rb2d.velocity;
+            Vector2 motion = _rb2d.linearVelocity;
 
             if (xInput != 0.0f)
             {
@@ -62,7 +62,7 @@ namespace SuperPupSystems.GamePlay2D
                     spriteRenderer.flipX = true;
             }
 
-            _rb2d.velocity = motion;
+            _rb2d.linearVelocity = motion;
         }
     }
 }
