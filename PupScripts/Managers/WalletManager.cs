@@ -15,7 +15,7 @@ namespace SuperPupSystems.Manager
         public UnityEvent outOfCashEvent;
 
         // Variables
-        private int _coin = 0;
+	[SerializeField] private int _coin = 0;
 
         public int Coin { get { return _coin; } }
 
