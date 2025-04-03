@@ -56,11 +56,11 @@ namespace SuperPupSystems.Helper
 
         private void CollisionCheck()
         {
-            if (Physics.Linecast(m_lastPosition, transform.position, out m_info, mask))
+            if (Physics.Linecast(m_lastPosition, transform.position, out hitInfo, mask))
             {
-                if (tags.Contains(m_info.transform.tag))
+                if (tags.Contains(hitInfo.transform.tag))
                 {
-                    m_info.transform.GetComponent<Health>()?.Damage(damage);
+                    hitInfo.transform.GetComponent<Health>()?.Damage(damage);
 
                     hitTarget.Invoke();
                 }
