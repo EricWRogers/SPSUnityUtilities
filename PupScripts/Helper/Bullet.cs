@@ -15,9 +15,10 @@ namespace SuperPupSystems.Helper
         public UnityEvent hitTarget;
         public LayerMask mask;
         public List<string> tags;
-
         private Vector3 m_lastPosition;
-        private RaycastHit m_info;
+
+        [HideInInspector]
+        public  RaycastHit hitInfo;
         private Timer m_timer;
 
         private void Awake()
