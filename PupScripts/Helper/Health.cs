@@ -22,13 +22,15 @@ namespace SuperPupSystems.Helper
         [Tooltip("")]
         public int currentHealth = 0;
 
+        public bool defaultToMaxHealth = true;
+
         /// <summary>
         /// Start is called in the frame when a script is enable just before any
         /// update methods are called the first time.
         /// </summary>
         void Start()
         {
-            if (currentHealth != 0)
+            if(defaultToMaxHealth)
                 currentHealth = maxHealth;
 
             if (healthChanged == null)
