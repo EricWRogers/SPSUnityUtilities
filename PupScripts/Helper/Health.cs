@@ -28,8 +28,7 @@ namespace SuperPupSystems.Helper
         /// </summary>
         void Start()
         {
-            if (currentHealth != 0)
-                currentHealth = maxHealth;
+            currentHealth = maxHealth;
 
             if (healthChanged == null)
                 healthChanged = new HealthChangedEvent();
