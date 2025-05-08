@@ -11,6 +11,7 @@ namespace SuperPupSystems.Helper
         public int damage = 1;
         public float speed = 20f;
         public float lifeTime = 10f;
+        public float gravity = 0.0f;
         public bool destroyOnImpact = true;
         public UnityEvent hitTarget;
         public LayerMask mask;
@@ -52,6 +53,7 @@ namespace SuperPupSystems.Helper
         private void Move()
         {
             transform.position += transform.forward * speed * Time.fixedDeltaTime;
+            transform.position += Vector3.up * gravity * Time.fixedDeltaTime; 
         }
 
         private void CollisionCheck()
