@@ -11,13 +11,15 @@ namespace SuperPupSystems.Helper
         public int damage = 1;
         public float speed = 20f;
         public float lifeTime = 10f;
+        public float gravity = 0.0f;
         public bool destroyOnImpact = true;
         public UnityEvent hitTarget;
         public LayerMask mask;
         public List<string> tags;
-
         private Vector3 m_lastPosition;
-        private RaycastHit m_info;
+
+        [HideInInspector]
+        public  RaycastHit hitInfo;
         private Timer m_timer;
 
         private void Awake()
@@ -51,15 +53,16 @@ namespace SuperPupSystems.Helper
         private void Move()
         {
             transform.position += transform.forward * speed * Time.fixedDeltaTime;
+            transform.position += Vector3.up * gravity * Time.fixedDeltaTime; 
         }
 
         private void CollisionCheck()
         {
-            if (Physics.Linecast(m_lastPosition, transform.position, out m_info, mask))
+            if (Physics.Linecast(m_lastPosition, transform.position, out hitInfo, mask))
             {
-                if (tags.Contains(m_info.transform.tag))
+                if (tags.Contains(hitInfo.transform.tag))
                 {
-                    m_info.transform.GetComponent<Health>()?.Damage(damage);
+                    hitInfo.transform.GetComponent<Health>()?.Damage(damage);
 
                     hitTarget.Invoke();
                 }
