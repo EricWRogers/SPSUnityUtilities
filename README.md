@@ -32,8 +32,9 @@ SuperPupStudio Unity Utilities
 
 Type
 - [DOC] Documentation
-- [BUG FIX] Bug Fix
+- [FIX] Bug Fix
 - [FEATURE]
+- [BUILD] Build/Dependencies
 
 ### branch
 lower-case with - used instead of space
