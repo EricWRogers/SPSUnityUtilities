@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using SuperPupSystems.Helper;
 
-namespace SuperPupSystems.Helper
+namespace SuperPupSystems.GamePlay2D
 {
     [RequireComponent(typeof(Timer))]
     public class Bullet2D : MonoBehaviour
