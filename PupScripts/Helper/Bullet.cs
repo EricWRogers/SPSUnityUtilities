@@ -64,11 +64,17 @@ namespace SuperPupSystems.Helper
                 {
                     hitInfo.transform.GetComponent<Health>()?.Damage(damage);
 
-                    hitTarget.Invoke();
+                    if (destroyOnImpact == false)
+                    {
+                        hitTarget.Invoke();
+                    }
                 }
+
+                
 
                 if (destroyOnImpact)
                 {
+                    hitTarget.Invoke();
                     DestroyBullet();
                 }
             }
