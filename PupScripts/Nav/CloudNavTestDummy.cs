@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
-using KinematicCharacterControler;
 
 public class CloudNavTestDummy : MonoBehaviour
 {
     public CloudNav cloudNav;
+    public Transform target;
     public List<Vector3> path;
     public int startId;
     public int endId;
@@ -50,12 +50,15 @@ public class CloudNavTestDummy : MonoBehaviour
 
     void GetNewPath()
     {
+        if (target == null)
+            return;
+        
         path.Clear();
 
         targetIndex = 0;
 
         startId = cloudNav.aStar.GetClosestPoint(transform.position);
-        endId = cloudNav.aStar.GetClosestPoint(PlayerMovement.instance.gameObject.transform.position);
+        endId = cloudNav.aStar.GetClosestPoint(target.position);
 
         path = cloudNav.aStar.GetPath(startId, endId);
 
