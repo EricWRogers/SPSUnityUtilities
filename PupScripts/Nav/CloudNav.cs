@@ -49,7 +49,7 @@ public class CloudNav : MonoBehaviour
     public int yCount = 10;
     public int zCount = 50;
     public float sphereRadius = 1.0f;
-    public float nodeSpacing = 1.0f;
+    public float nodeSpaceing = 1.0f;
     public LayerMask mask;
 
     void Awake()
@@ -83,6 +83,7 @@ public class CloudNav : MonoBehaviour
         }
 
         Debug.Log("Cloud Nav: Spawn New Cloud");
+        Vector3 center = transform.position;
         int halfXCount = xCount / 2;
         int halfYCount = yCount / 2;
         int halfZCount = zCount / 2;
@@ -93,7 +94,7 @@ public class CloudNav : MonoBehaviour
             {
                 for (int z = -halfZCount; z < halfZCount; z++)
                 {
-                    Vector3 targetPoint = new Vector3(x, y, z) * nodeSpacing;
+                    Vector3 targetPoint = new Vector3(x, y, z) * nodeSpaceing + center;
 
                     bool safe = false;
 
@@ -102,7 +103,7 @@ public class CloudNav : MonoBehaviour
                             safe = true;
 
                     for (int i = 0; i < excludeAreas.Count; i++)
-                        if (excludeAreas[i].ClosestPoint(targetPoint) != targetPoint)
+                        if (excludeAreas[i].ClosestPoint(targetPoint) == targetPoint)
                             safe = false;
 
                     if (safe)
@@ -120,7 +121,7 @@ public class CloudNav : MonoBehaviour
             {
                 for (int z = -halfZCount; z < halfZCount; z++)
                 {
-                    int id = aStar.GetPointByPosition(new Vector3(x, y, z) * nodeSpacing);
+                    int id = aStar.GetPointByPosition(new Vector3(x, y, z) * nodeSpaceing + center);
 
                     if (id < 0)
                     {
@@ -133,34 +134,34 @@ public class CloudNav : MonoBehaviour
                         continue;
                     }
 
-                    int forward = aStar.GetPointByPosition(new Vector3(x, y, z + 1) * nodeSpacing);
-                    int forwardLeft = aStar.GetPointByPosition(new Vector3(x - 1, y, z + 1) * nodeSpacing);
-                    int forwardRight = aStar.GetPointByPosition(new Vector3(x + 1, y, z + 1) * nodeSpacing);
-                    int left = aStar.GetPointByPosition(new Vector3(x - 1, y, z) * nodeSpacing);
-                    int right = aStar.GetPointByPosition(new Vector3(x + 1, y, z) * nodeSpacing);
-                    int back = aStar.GetPointByPosition(new Vector3(x, y, z - 1) * nodeSpacing);
-                    int backLeft = aStar.GetPointByPosition(new Vector3(x - 1, y, z - 1) * nodeSpacing);
-                    int backRight = aStar.GetPointByPosition(new Vector3(x + 1, y, z - 1) * nodeSpacing);
+                    int forward = aStar.GetPointByPosition(new Vector3(x, y, z + 1) * nodeSpaceing + center);
+                    int forwardLeft = aStar.GetPointByPosition(new Vector3(x - 1, y, z + 1) * nodeSpaceing + center);
+                    int forwardRight = aStar.GetPointByPosition(new Vector3(x + 1, y, z + 1) * nodeSpaceing + center);
+                    int left = aStar.GetPointByPosition(new Vector3(x - 1, y, z) * nodeSpaceing + center);
+                    int right = aStar.GetPointByPosition(new Vector3(x + 1, y, z) * nodeSpaceing + center);
+                    int back = aStar.GetPointByPosition(new Vector3(x, y, z - 1) * nodeSpaceing + center);
+                    int backLeft = aStar.GetPointByPosition(new Vector3(x - 1, y, z - 1) * nodeSpaceing + center);
+                    int backRight = aStar.GetPointByPosition(new Vector3(x + 1, y, z - 1) * nodeSpaceing + center);
 
-                    int upForward = aStar.GetPointByPosition(new Vector3(x, y + 1, z + 1) * nodeSpacing);
-                    int upForwardLeft = aStar.GetPointByPosition(new Vector3(x - 1, y + 1, z + 1) * nodeSpacing);
-                    int upForwardRight = aStar.GetPointByPosition(new Vector3(x + 1, y + 1, z + 1) * nodeSpacing);
-                    int upLeft = aStar.GetPointByPosition(new Vector3(x - 1, y + 1, z) * nodeSpacing);
-                    int up = aStar.GetPointByPosition(new Vector3(x, y + 1, z) * nodeSpacing);
-                    int upRight = aStar.GetPointByPosition(new Vector3(x + 1, y + 1, z) * nodeSpacing);
-                    int upBack = aStar.GetPointByPosition(new Vector3(x, y + 1, z - 1) * nodeSpacing);
-                    int upBackLeft = aStar.GetPointByPosition(new Vector3(x - 1, y + 1, z - 1) * nodeSpacing);
-                    int upBackRight = aStar.GetPointByPosition(new Vector3(x + 1, y + 1, z - 1) * nodeSpacing);
+                    int upForward = aStar.GetPointByPosition(new Vector3(x, y + 1, z + 1) * nodeSpaceing + center);
+                    int upForwardLeft = aStar.GetPointByPosition(new Vector3(x - 1, y + 1, z + 1) * nodeSpaceing + center);
+                    int upForwardRight = aStar.GetPointByPosition(new Vector3(x + 1, y + 1, z + 1) * nodeSpaceing + center);
+                    int upLeft = aStar.GetPointByPosition(new Vector3(x - 1, y + 1, z) * nodeSpaceing + center);
+                    int up = aStar.GetPointByPosition(new Vector3(x, y + 1, z) * nodeSpaceing + center);
+                    int upRight = aStar.GetPointByPosition(new Vector3(x + 1, y + 1, z) * nodeSpaceing + center);
+                    int upBack = aStar.GetPointByPosition(new Vector3(x, y + 1, z - 1) * nodeSpaceing + center);
+                    int upBackLeft = aStar.GetPointByPosition(new Vector3(x - 1, y + 1, z - 1) * nodeSpaceing + center);
+                    int upBackRight = aStar.GetPointByPosition(new Vector3(x + 1, y + 1, z - 1) * nodeSpaceing + center);
 
-                    int downForward = aStar.GetPointByPosition(new Vector3(x, y - 1, z + 1) * nodeSpacing);
-                    int downForwardLeft = aStar.GetPointByPosition(new Vector3(x - 1, y - 1, z + 1) * nodeSpacing);
-                    int downForwardRight = aStar.GetPointByPosition(new Vector3(x + 1, y - 1, z + 1) * nodeSpacing);
-                    int downLeft = aStar.GetPointByPosition(new Vector3(x - 1, y - 1, z) * nodeSpacing);
-                    int down = aStar.GetPointByPosition(new Vector3(x, y - 1, z) * nodeSpacing);
-                    int downRight = aStar.GetPointByPosition(new Vector3(x + 1, y - 1, z) * nodeSpacing);
-                    int downBack = aStar.GetPointByPosition(new Vector3(x, y - 1, z - 1) * nodeSpacing);
-                    int downBackLeft = aStar.GetPointByPosition(new Vector3(x - 1, y - 1, z - 1) * nodeSpacing);
-                    int downBackRight = aStar.GetPointByPosition(new Vector3(x + 1, y - 1, z - 1) * nodeSpacing);
+                    int downForward = aStar.GetPointByPosition(new Vector3(x, y - 1, z + 1) * nodeSpaceing + center);
+                    int downForwardLeft = aStar.GetPointByPosition(new Vector3(x - 1, y - 1, z + 1) * nodeSpaceing + center);
+                    int downForwardRight = aStar.GetPointByPosition(new Vector3(x + 1, y - 1, z + 1) * nodeSpaceing + center);
+                    int downLeft = aStar.GetPointByPosition(new Vector3(x - 1, y - 1, z) * nodeSpaceing + center);
+                    int down = aStar.GetPointByPosition(new Vector3(x, y - 1, z) * nodeSpaceing + center);
+                    int downRight = aStar.GetPointByPosition(new Vector3(x + 1, y - 1, z) * nodeSpaceing + center);
+                    int downBack = aStar.GetPointByPosition(new Vector3(x, y - 1, z - 1) * nodeSpaceing + center);
+                    int downBackLeft = aStar.GetPointByPosition(new Vector3(x - 1, y - 1, z - 1) * nodeSpaceing + center);
+                    int downBackRight = aStar.GetPointByPosition(new Vector3(x + 1, y - 1, z - 1) * nodeSpaceing + center);
 
                     if (forward > -1) aStar.ConnectPoints(id, forward);
                     if (forwardLeft > -1) aStar.ConnectPoints(id, forwardLeft);
@@ -245,7 +246,7 @@ public class CloudNav : MonoBehaviour
                 {
                     for (int z = -halfZCount; z < halfZCount; z++)
                     {
-                        Vector3 targetPosition = new Vector3(x, y, z) * nodeSpacing;
+                        Vector3 targetPosition = new Vector3(x, y, z) * nodeSpaceing + center;
 
                         if (targetPosition == checkPoint.position)
                             continue;
@@ -293,7 +294,7 @@ public class CloudNav : MonoBehaviour
         {
             DestroyImmediate(transform.GetChild(0).gameObject);
         }
-
+        Vector3 center = transform.position;
         int halfXCount = xCount / 2;
         int halfYCount = yCount / 2;
         int halfZCount = zCount / 2;
@@ -309,7 +310,7 @@ public class CloudNav : MonoBehaviour
             {
                 for (int z = -halfZCount; z < halfZCount; z++)
                 {
-                    Vector3 targetPosition = new Vector3(x, y, z) * nodeSpacing;
+                    Vector3 targetPosition = new Vector3(x, y, z) * nodeSpaceing + center;
 
                     if (targetPosition == checkPoint.position)
                         continue;
