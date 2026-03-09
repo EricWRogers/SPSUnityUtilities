@@ -102,7 +102,7 @@ public class CloudNav : MonoBehaviour
                             safe = true;
 
                     for (int i = 0; i < excludeAreas.Count; i++)
-                        if (excludeAreas[i].ClosestPoint(targetPoint) != targetPoint)
+                        if (excludeAreas[i].ClosestPoint(targetPoint) == targetPoint)
                             safe = false;
 
                     if (safe)
